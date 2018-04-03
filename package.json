@@ -4,7 +4,10 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "test": "(echo TODO) && exit 1"
+    "test": "(echo TODO) && exit 1",
+    "build": "sb-babel-cli src -o lib",
+    "watch": "npm run build -- --watch",
+    "dev": "npm run watch -- -x lib/index.js"
   },
   "repository": {
     "type": "git",
