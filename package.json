@@ -4,7 +4,9 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "test": "(echo TODO) && exit 1",
+    "test": "(npm run test:prettier) && (npm run test:eslint)",
+    "test:prettier": "prettier --list-different 'src/**/*.js'",
+    "test:eslint": "eslint .",
     "build": "sb-babel-cli src -o lib",
     "watch": "npm run build -- --watch",
     "dev": "npm run watch -- -x lib/index.js"
