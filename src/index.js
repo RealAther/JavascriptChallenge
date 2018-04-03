@@ -2,7 +2,7 @@
 
 async function main() {
   // TODO: Do something here
-  console.log('Hello World')
+  console.log('Hello World!')
 }
 
 main().catch(error => {
