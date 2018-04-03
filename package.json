@@ -2,18 +2,24 @@
   "name": "javascriptchallenge",
   "version": "0.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "(echo TODO) && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/RealAther/JavascriptChallenge.git"
   },
-  "author": "",
+  "author": "SteelBrain <i@steelbrain.me> | Athar <real.ather@gmail.com>",
   "license": "UNLICENSED",
   "bugs": {
     "url": "https://github.com/RealAther/JavascriptChallenge/issues"
   },
-  "homepage": "https://github.com/RealAther/JavascriptChallenge#readme"
+  "homepage": "https://github.com/RealAther/JavascriptChallenge#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-steelbrain": "^5.0.3",
+    "eslint-config-steelbrain": "^5.0.2",
+    "sb-babel-cli": "^0.1.1"
+  }
 }
