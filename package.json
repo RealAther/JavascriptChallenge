@@ -9,7 +9,11 @@
     "test:eslint": "eslint .",
     "build": "sb-babel-cli src -o lib",
     "watch": "npm run build -- --watch",
-    "dev": "npm run watch -- -x lib/index.js"
+    "dev": "npm run watch -- -x lib/index.js",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": ["npm run test:prettier --", "npm run test:eslint --"]
   },
   "repository": {
     "type": "git",
