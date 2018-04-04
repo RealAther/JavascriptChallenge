@@ -5,7 +5,6 @@ import http from 'http'
 let userCount = 0
 
 async function main() {
-  // TODO: Do something here
   http
     .createServer(function(request, response) {
       userCount++
