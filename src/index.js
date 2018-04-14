@@ -1,11 +1,13 @@
 // @flow
 
 import express from 'express'
+import bodyParser from 'body-parser'
 
 let userCount = 0
 
 async function main() {
   express()
+    .use(bodyParser.urlencoded({ extended: true }))
     .use(express.static('./public'))
     .get('/', function(req, res) {
       userCount++
