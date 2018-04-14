@@ -2,10 +2,13 @@
 
 import express from 'express'
 
+let userCount = 0
+
 async function main() {
   express()
     .use(express.static('./public'))
     .get('/', function(req, res) {
+      userCount++
       res.end(`
         <!DOCTYPE HTML>
         <html>
@@ -13,7 +16,7 @@ async function main() {
             <link rel="stylesheet" href="style.css" type="text/css">
           </head>
           <body>
-            Hello World
+            Hello World!: You have had ${userCount} visits.
           </body>
         </html>
       `)
