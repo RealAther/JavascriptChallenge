@@ -4,7 +4,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 
 let userCount = 0
-let array = []
+const array = []
 
 function renderPage(req, res) {
   res.end(`
@@ -15,14 +15,15 @@ function renderPage(req, res) {
       </head>
       <body>
         Hello World!: You have had ${userCount} visits.
-        <form method="post">
+        <form method="post" id="writePost">
           <div class="text-container">
             <textarea name="content" class="text-area" placeholder="Write something here!"></textarea>
             <button class="submit">Submit</button>
           </div>
         </form>
         Previously sent stuff:
-        <pre>${array.join('\n')}</pre>
+        <pre id="content">${array.join('\n')}</pre>
+        <script src="/scripts/client.js"></script>
       </body>
     </html>
   `)
@@ -34,7 +35,11 @@ async function main() {
     .use(express.static('./public'))
     .post('/', function(req, res) {
       array.push(req.body.content)
-      renderPage(req, res)
+      if (req.accepts('application/x-maohra')) {
+        res.end(array.join('\n'))
+      } else {
+        renderPage(req, res)
+      }
     })
     .get('/', function(req, res) {
       userCount++
