@@ -1,24 +1,13 @@
 ;(function() {
   function postToServer(path, contents) {
-    return new Promise(function(resolve, reject) {
-      // NOTE: NEVER EVER USE XMLHttpRequest
-      // Use fetch() instead, it has promises built-in
-      const xhr = new XMLHttpRequest()
-      xhr.open('POST', path, true)
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-      xhr.setRequestHeader('Accept', 'application/x-maohra')
-      xhr.onload = function() {
-        if (xhr.status >= 200 && xhr.status < 400) {
-          resolve(xhr.responseText)
-        } else {
-          const httpError = new Error(`HTTP Error: Code ${xhr.status}`)
-          httpError.xhr = xhr
-          httpError.response = xhr.responseText
-          reject(httpError)
-        }
-      }
-      xhr.send(contents)
-    })
+    return fetch(path, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Accept: 'application/x-maohra',
+      },
+      body: contents,
+    }).then(response => response.text())
   }
 
   function urlEncodeObject(obj) {
