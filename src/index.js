@@ -3,12 +3,14 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 
-import { sequelize } from './models'
+import { sequelize, Post } from './models'
+// default export
+// named export
 
-let userCount = 0
-const array = []
+async function renderPage(req, res) {
+  const allPosts = await Post.findAll() // All = array of objects
+  // { id: string, content: string, createdAt: Date, updateAt: Date }
 
-function renderPage(req, res) {
   res.end(`
     <!DOCTYPE HTML>
     <html>
@@ -16,7 +18,6 @@ function renderPage(req, res) {
         <link rel="stylesheet" href="style.css" type="text/css">
       </head>
       <body>
-        Hello World!: You have had ${userCount} visits.
         <form method="post" id="writePost">
           <div class="text-container">
             <textarea name="content" class="text-area" placeholder="Write something here!"></textarea>
@@ -24,7 +25,7 @@ function renderPage(req, res) {
           </div>
         </form>
         Previously sent stuff:
-        <pre id="content">${array.join('\n')}</pre>
+        <pre id="content">${allPosts.map(item => item.content).join('\n')}</pre>
         <script src="/scripts/client.js"></script>
       </body>
     </html>
@@ -39,17 +40,19 @@ async function main() {
   express()
     .use(bodyParser.urlencoded({ extended: true }))
     .use(express.static('./public'))
-    .post('/', function(req, res) {
-      array.push(req.body.content)
+    .post('/', async function(req, res) {
+      await Post.create({
+        content: req.body.content,
+      })
       if (req.accepts('application/x-maohra')) {
-        res.end(array.join('\n'))
+        const allPosts = await Post.findAll()
+        res.end(allPosts.map(item => item.content).join('\n'))
       } else {
-        renderPage(req, res)
+        await renderPage(req, res)
       }
     })
-    .get('/', function(req, res) {
-      userCount++
-      renderPage(req, res)
+    .get('/', async function(req, res) {
+      await renderPage(req, res)
     })
     .listen(8080)
 }
