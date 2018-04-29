@@ -3,6 +3,8 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 
+import { sequelize } from './models'
+
 let userCount = 0
 const array = []
 
@@ -30,6 +32,10 @@ function renderPage(req, res) {
 }
 
 async function main() {
+  // TODO: When DB structure changes, comment this line and uncomment the line below
+  await sequelize.authenticate()
+  // await sequelize.sync({ force: true })
+
   express()
     .use(bodyParser.urlencoded({ extended: true }))
     .use(express.static('./public'))

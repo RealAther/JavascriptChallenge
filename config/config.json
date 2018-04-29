@@ -1,0 +1,10 @@
+{
+  "development": {
+    "username": "jschal",
+    "password": "jschal",
+    "database": "jschal",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "port": 15432
+  }
+}
