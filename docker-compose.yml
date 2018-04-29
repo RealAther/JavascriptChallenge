@@ -1,0 +1,14 @@
+version: '2'
+services:
+  db:
+    image: postgres:9.6-alpine
+    ports:
+      - 15432:5432
+      # $HOST:$CONTAINER
+    volumes:
+      - $HOME/mnt/js-challenge-pgdata:/var/lib/postgresql/data/pgdata
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_USER=jschal
+      - POSTGRES_PASSWORD=jschal
+      - POSTGRES_DATABASE=jschal
