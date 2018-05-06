@@ -15,7 +15,7 @@ async function renderPage(req, res) {
     <!DOCTYPE HTML>
     <html>
       <head>
-        <link rel="stylesheet" href="style.css" type="text/css">
+        <link rel="stylesheet" href="/styles/style.css" type="text/css">
       </head>
       <body>
         <form method="post" id="writePost">
@@ -26,6 +26,7 @@ async function renderPage(req, res) {
         </form>
         Previously sent stuff:
         <pre id="content">${allPosts.map(item => item.content).join('\n')}</pre>
+        <script src="/scripts/common.js"></script>
         <script src="/scripts/client.js"></script>
       </body>
     </html>
@@ -44,9 +45,9 @@ async function main() {
       await Post.create({
         content: req.body.content,
       })
-      if (req.accepts('application/x-maohra')) {
+      if (req.accepts('json')) {
         const allPosts = await Post.findAll()
-        res.end(allPosts.map(item => item.content).join('\n'))
+        res.json(allPosts.map(item => item.content))
       } else {
         await renderPage(req, res)
       }
