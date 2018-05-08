@@ -4,7 +4,7 @@ function postToServer(path, contents) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      Accept: 'application/x-javascript',
+      Accept: 'application/json',
     },
     body: contents,
   }).then(response => response.json())

@@ -3,7 +3,7 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 
-import { sequelize, Post } from './models'
+import { sequelize, Post, User } from './models'
 // default export
 // named export
 
@@ -54,6 +54,67 @@ async function main() {
     })
     .get('/', async function(req, res) {
       await renderPage(req, res)
+    })
+    .post('/signup', async function(req, res) {
+      const newlyCreatedUser = await User.create({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        password: req.body.password,
+      })
+
+      if (req.accepts('json')) {
+        res.json({
+          userId: newlyCreatedUser.id,
+          status: 'success', // or 'fail',
+          failMessage: null,
+        })
+      } else {
+        res.end(`
+          <!DOCTYPE HTML>
+          <html>
+            <head></head>
+            <body>
+              You have been successfully signed up. Please wait while we redirect you
+
+              OR
+
+              Signup unsuccessful. Kindly check your fields 'blah' and try again
+            </body>
+          </html>
+        `)
+      }
+    })
+    .get('/signup', async function(req, res) {
+      res.end(`
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>Sign Up</title>
+            <link rel="stylesheet" href="/styles/style.css" type="text/css">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.css" type="text/css">
+          </head>
+          <body>
+            <form method="post" id="emailForm">
+              <div class="email-main-container">
+                <div class="input-name-container">
+                  <input type="text" class="firstNameInput"placeholder="FirstName" name="firstName">
+                  <input type="text" placeholder="LastName" name="lastName">
+                </div>
+                <div class="input-email-container">
+                  <input type="email" placeholder="example@gmail.com" name="email">
+                  <input type="password" placeholder="*****" name="password">
+                </div>
+                <div class="signup-button">
+                  <button class="submit">Sign Up</button>
+                </div>
+              </div>
+            </form>
+            <script src="/scripts/common.js" type="application/javascript"></script>
+            <script src="/scripts/signup.js" type="application/javascript"></script>
+          </body>
+        </html>
+        `)
     })
     .listen(8080)
 }
