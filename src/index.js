@@ -1,6 +1,7 @@
 // @flow
 
 import express from 'express'
+import expressSession from 'express-session'
 import bodyParser from 'body-parser'
 
 import { sequelize, Post, User } from './models'
@@ -39,6 +40,14 @@ async function main() {
   // await sequelize.sync({ force: true })
 
   express()
+    .use(
+      expressSession({
+        secret: 'test',
+        resave: false,
+        saveUninitialized: true,
+      }),
+    )
+
     .use(bodyParser.urlencoded({ extended: true }))
     .use(express.static('./public'))
     .post('/', async function(req, res) {

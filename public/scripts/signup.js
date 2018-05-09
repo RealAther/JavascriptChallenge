@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 ;(function() {
   const emailForm = document.getElementById('emailForm')
   if (!emailForm) {
@@ -9,8 +11,8 @@
     event.preventDefault()
     const values = urlEncodeObject(getValuesFromForm(emailForm))
     postToServer('/signup', values)
-      .then(function(response) {
-        location.href = '/'
+      .then(function() {
+        window.location.href = '/'
       })
       .catch(error => {
         console.log('error', error)
