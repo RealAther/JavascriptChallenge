@@ -7,6 +7,7 @@ function postToServer(path, contents) {
       Accept: 'application/json',
     },
     body: contents,
+    credentials: 'same-origin',
   }).then(response => response.json())
 }
 

@@ -12,3 +12,9 @@ services:
       - POSTGRES_USER=jschal
       - POSTGRES_PASSWORD=jschal
       - POSTGRES_DATABASE=jschal
+  redis:
+    image: redis:4-alpine
+    ports:
+      -  16379:6379
+    volumes:
+      - $HOME/mnt/js-challenge-redisdata:/data

@@ -1,8 +1,10 @@
 // @flow
 
 import express from 'express'
-import expressSession from 'express-session'
+import passport from 'passport'
 import bodyParser from 'body-parser'
+import connectRedis from 'connect-redis'
+import expressSession from 'express-session'
 
 import { sequelize, Post, User } from './models'
 // default export
@@ -19,6 +21,7 @@ async function renderPage(req, res) {
         <link rel="stylesheet" href="/styles/style.css" type="text/css">
       </head>
       <body>
+        ${req.user ? `You are logged in as '${req.user.firstName} ${req.user.lastName}'` : ''}
         <form method="post" id="writePost">
           <div class="text-container">
             <textarea name="content" class="text-area" placeholder="Write something here!"></textarea>
@@ -35,20 +38,34 @@ async function renderPage(req, res) {
 }
 
 async function main() {
+  const RedisStore = connectRedis(expressSession)
+
   // TODO: When DB structure changes, comment this line and uncomment the line below
   await sequelize.authenticate()
   // await sequelize.sync({ force: true })
+  passport.serializeUser(function(user, done) {
+    done(null, user.id)
+  })
+
+  passport.deserializeUser(function(id, done) {
+    User.findById(id).then(user => done(null, user), err => done(err, null))
+  })
 
   express()
+    .use(bodyParser.urlencoded({ extended: true }))
     .use(
       expressSession({
-        secret: 'test',
+        store: new RedisStore({
+          port: 16379,
+        }),
+        cookie: {},
         resave: false,
-        saveUninitialized: true,
+        saveUninitialized: false,
+        secret: 'some-really-secret-thing?',
       }),
     )
-
-    .use(bodyParser.urlencoded({ extended: true }))
+    .use(passport.initialize())
+    .use(passport.session())
     .use(express.static('./public'))
     .post('/', async function(req, res) {
       await Post.create({
@@ -64,12 +81,19 @@ async function main() {
     .get('/', async function(req, res) {
       await renderPage(req, res)
     })
-    .post('/signup', async function(req, res) {
+    .post('/signup', async function(req, res, next) {
       const newlyCreatedUser = await User.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password,
+      })
+
+      await new Promise(function(resolve) {
+        req.login(newlyCreatedUser, function(err) {
+          if (err) next(err)
+          else resolve()
+        })
       })
 
       if (req.accepts('json')) {
@@ -124,6 +148,14 @@ async function main() {
           </body>
         </html>
         `)
+    })
+    .get('/signout', function(req, res) {
+      if (req.accepts('html')) {
+        req.logout()
+        res.redirect('/')
+      } else {
+        res.json({ status: 'success' })
+      }
     })
     .listen(8080)
 }

@@ -12,7 +12,7 @@
     const values = urlEncodeObject(getValuesFromForm(emailForm))
     postToServer('/signup', values)
       .then(function() {
-        window.location.href = '/'
+        // window.location.href = '/'
       })
       .catch(error => {
         console.log('error', error)
