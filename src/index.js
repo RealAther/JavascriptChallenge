@@ -30,6 +30,13 @@ async function renderPage(req, res) {
         </form>
         Previously sent stuff:
         <pre id="content">${allPosts.map(item => item.content).join('\n')}</pre>
+        ${
+          req.user
+            ? `<div class="signout-button">
+          <a href="/signout"><button class="logout">Log Out</button></a>
+        </div>`
+            : ''
+        }
         <script src="/scripts/common.js"></script>
         <script src="/scripts/client.js"></script>
       </body>
@@ -123,7 +130,7 @@ async function main() {
         <!DOCTYPE html>
         <html>
           <head>
-            <title>Sign Up</title>
+            <title>Sign-Up</title>
             <link rel="stylesheet" href="/styles/style.css" type="text/css">
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.css" type="text/css">
           </head>
@@ -156,6 +163,58 @@ async function main() {
       } else {
         res.json({ status: 'success' })
       }
+    })
+    .post('/login', async function(req, res, next) {
+      const foundUser = await User.findOne({
+        where: {
+          email: req.body.email,
+          password: req.body.password,
+        },
+      })
+      if (!foundUser) {
+        if (req.accepts('html')) {
+          res.status(400).end('Invalid username/password')
+        } else {
+          res.json({ status: 'error', message: 'Invalid username or password' })
+        }
+        return
+      }
+      await new Promise(function(resolve) {
+        req.login(foundUser, function(err) {
+          if (err) next(err)
+          else resolve()
+        })
+      })
+      if (req.accepts('html')) {
+        res.end('Login successful')
+      } else {
+        res.json({ status: 'success' })
+      }
+    })
+    .get('/login', async function(req, res) {
+      res.end(`
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <title>Log-In</title>
+              <link rel="stylesheet" href="/styles/style.css" type="text/css"/>
+              <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.css" type="text/css"/>
+            </head>
+            <body>
+              <form method="post" id="emailForm">
+                <div class="email-main-container">
+                  <div class="input-email-container">
+                    <input type="email" placeholder="example@gmail.com" name="email">
+                    <input type="password" placeholder="*****" name="password">
+                  </div>
+                  <div class="signup-button">
+                      <a href="/"><button class="signup">Log In</button></a>
+                  </div>
+                </div>
+              </form>
+            </body>
+          </html>
+        `)
     })
     .listen(8080)
 }
