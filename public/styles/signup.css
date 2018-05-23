@@ -1,0 +1,206 @@
+body {
+  font-family: sans-serif;
+  background: #36393f;
+}
+
+input {
+  width: 310.328px;
+  height: 10px;
+  padding: 10px;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
+  border-radius: 5px;
+  outline: none;
+  box-shadow: inset 0 1px 2px rgba(27, 31, 35, 0.075);
+}
+
+input:focus {
+  border-color: #2188ff;
+  line-height: 1.5;
+  letter-spacing: 0.03em;
+}
+
+::-webkit-input-placeholder {
+  color: #96999b;
+  font-weight: lighter;
+}
+
+button {
+  color: #fff;
+  background-image: linear-gradient(-180deg, #34d058 0%, #28a745 90%);
+  border-radius: 5px;
+  padding: 10px;
+  width: 310.312px;
+  height: 40px;
+  outline: none;
+}
+
+button:hover {
+  box-shadow: inset 1px 1px 10px 20px rgba(27, 31, 35, 0.075);
+}
+
+a:hover {
+  color: gray;
+}
+
+.body-wrapper {
+  background: url('/images/laptop-icon.svg');
+}
+
+.body-header {
+  display: flex;
+  justify-content: center;
+  background-color: #24292e;
+  height: 70px;
+}
+
+.body-header-items {
+  display: flex;
+  flex-direction: row;
+  color: white;
+  margin-top: 5px;
+}
+
+.body-header-item-one {
+  font-size: 50px;
+}
+
+.body-header-item-two {
+  font-size: 35px;
+  margin-top: 13px;
+  text-transform: uppercase;
+}
+
+.body-container {
+  display: flex;
+  justify-content: center;
+  padding: 128px 0;
+}
+
+.body-container-items {
+}
+
+.body-container-item-one {
+  display: flex;
+  justify-content: center;
+
+  margin-top: 20px;
+  font-size: 30px;
+}
+
+.body-container-item-one {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+
+  width: 1028px;
+  height: 458px;
+}
+
+.body-container-item-one-left {
+  display: flex;
+  flex-direction: column;
+  width: 620px;
+  justify-content: center;
+}
+
+.bfl {
+  font-family: 'Jura', sans-serif;
+  font-size: 90px;
+  line-height: 0.6;
+
+  color: white;
+}
+
+.body-container-item-one-right {
+  border-radius: 5px;
+  background-color: white;
+  color: #586069;
+
+  padding: 24px;
+
+  font-size: 15px;
+}
+
+.email-main-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-first-name {
+  display: flex;
+  flex-direction: column;
+  text-transform: capitalize;
+
+  margin-bottom: 15px;
+}
+
+.input-firstName {
+  margin-bottom: 5px;
+}
+
+.input-last-name {
+  display: flex;
+  flex-direction: column;
+  text-transform: capitalize;
+
+  margin: 15px 0;
+}
+
+.input-lastName {
+  margin-bottom: 5px;
+}
+
+.input-email {
+  display: flex;
+  flex-direction: column;
+  text-transform: capitalize;
+
+  margin: 15px 0;
+}
+
+.inputEmail {
+  margin-bottom: 5px;
+}
+
+.input-password {
+  display: flex;
+  flex-direction: column;
+  text-transform: capitalize;
+
+  margin: 15px 0;
+}
+
+.inputPassword {
+  margin-bottom: 5px;
+}
+
+.signup-button {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 40px;
+}
+
+.signup-paragraph {
+  font-family: 'Jura', sans-serif;
+  font-size: 35px;
+  color: #a2a2a2;
+}
+
+.JSChallenge-link {
+  color: white;
+  text-decoration: none;
+}
+
+.Log-In {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.Log-In-Link {
+  color: blue;
+  padding-left: 5px;
+  text-decoration: none;
+}

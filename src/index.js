@@ -131,25 +131,63 @@ async function main() {
         <html>
           <head>
             <title>Sign-Up</title>
-            <link rel="stylesheet" href="/styles/style.css" type="text/css">
+            <link rel="stylesheet" href="/styles/signup.css" type="text/css">
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.css" type="text/css">
+            <link href="https://fonts.googleapis.com/css?family=Jura:300" rel="stylesheet">
           </head>
           <body>
-            <form method="post" id="emailForm">
-              <div class="email-main-container">
-                <div class="input-name-container">
-                  <input type="text" class="firstNameInput"placeholder="FirstName" name="firstName">
-                  <input type="text" placeholder="LastName" name="lastName">
-                </div>
-                <div class="input-email-container">
-                  <input type="email" placeholder="example@gmail.com" name="email">
-                  <input type="password" placeholder="*****" name="password">
-                </div>
-                <div class="signup-button">
-                  <button class="submit">Sign Up</button>
+            <div class="body-wrapper">
+              <div class="body-header">
+                <div class="body-header-items">
+                  <div class="body-header-item-one ">
+                    <span class="js-word">JS</span>
+                  </div>
+                  <div class="body-header-item-two">
+                    <span class="challenge-word">Challenge</span>
+                  </div>
                 </div>
               </div>
-            </form>
+              <div class="body-container">
+                <div class="body-container-items">
+                  <div class="body-container-item-one">
+                    <div class="body-container-item-one-left">
+                      <div class="body-container-item-one-left-first">
+                        <span class="bfl">built for learning</span>
+                      </div>
+                      <div class="body-container-item-one-left-second">
+                        <p class="signup-paragraph"><a href="#" class="JSChallenge-link">JSChallenge</a> is a GitHub Repository where i'm learning javascript. <br /> It's for learning purposes</p>
+                      </div>
+                    </div>
+                    <div class="body-container-item-one-right">
+                      <form method="post" id="emailForm">
+                        <div class="email-main-container">
+                          <div class="input-first-name">
+                            <span class="input-firstName">first name</span>
+                            <input type="text" class="firstNameInput" placeholder="Your first name" name="firstName">
+                          </div>
+                          <div class="input-last-name">
+                            <span class="input-lastName">last name</span>
+                            <input type="text" placeholder="Your last name" name="lastName">
+                          </div>
+                          <div class="input-email">
+                            <span class="inputEmail">email</span>
+                            <input type="email" placeholder="you@example.com" name="email">
+                          </div>
+                          <div class="input-password">
+                            <span class="inputPassword">password</span>
+                            <input type="password"  placeholder="Create a password" name="password">
+                          </div>
+                          <div class="signup-button">
+                            <button class="submit">Sign Up</button>
+                            <span class="Log-In">Already have an account? <a href="/login" class="Log-In-Link">Log-In</a></span>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <script src="/scripts/common.js" type="application/javascript"></script>
             <script src="/scripts/signup.js" type="application/javascript"></script>
           </body>
