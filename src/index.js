@@ -235,21 +235,45 @@ async function main() {
           <html>
             <head>
               <title>Log-In</title>
-              <link rel="stylesheet" href="/styles/style.css" type="text/css"/>
+              <link rel="stylesheet" href="/styles/login.css" type="text/css"/>
               <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.css" type="text/css"/>
+              <link href="https://fonts.googleapis.com/css?family=Jura:300" rel="stylesheet">
             </head>
             <body>
-              <form method="post" id="emailForm">
-                <div class="email-main-container">
-                  <div class="input-email-container">
-                    <input type="email" placeholder="example@gmail.com" name="email">
-                    <input type="password" placeholder="*****" name="password">
-                  </div>
-                  <div class="signup-button">
-                      <a href="/"><button class="signup">Log In</button></a>
+              <div class="body-wrapper">
+                <div class="body-header">
+                  <div class="body-header-items">
+                    <div class="body-header-item-one ">
+                      <span class="js-word">JS</span>
+                    </div>
+                    <div class="body-header-item-two">
+                      <span class="challenge-word">Challenge</span>
+                    </div>
                   </div>
                 </div>
-              </form>
+                <div class="body-container">
+                  <div class="body-container-itemOne">
+                    <form method="post" id="emailForm">
+                      <div class="email-main-container">
+                        <div class="input-email-container">
+                          <div class="inputEmail">
+                            <span class="span-email">Email</span>
+                            <input type="email" placeholder="example@gmail.com" name="email">
+                          </div>
+                          <div class="inputPassword">
+                            <span class="span-password">Password</span>
+                            <input type="password" placeholder="*****" name="password">
+                          </div>
+                        </div>
+                        <div class="signup-button">
+                            <a href="/"><button class="signup">Log In</button></a>
+                            <span class="create-account">Don't have an account yet? <a href="/signup" class="create-account-link">create an account</a></span>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
             </body>
           </html>
         `)
