@@ -18,25 +18,54 @@ async function renderPage(req, res) {
     <!DOCTYPE HTML>
     <html>
       <head>
-        <link rel="stylesheet" href="/styles/style.css" type="text/css">
+        <link rel="stylesheet" href="/styles/main.css" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.css" type="text/css"/>
       </head>
       <body>
-        ${req.user ? `You are logged in as '${req.user.firstName} ${req.user.lastName}'` : ''}
-        <form method="post" id="writePost">
-          <div class="text-container">
-            <textarea name="content" class="text-area" placeholder="Write something here!"></textarea>
-            <button class="submit">Submit</button>
+        <div class="body-wrapper">
+          <div class="body-header">
+            <div class="body-header-items">
+              <div class="body-header-item-one ">
+                <span class="js-word">JS</span>
+              </div>
+              <div class="body-header-item-two">
+                <span class="challenge-word">Challenge</span>
+              </div>
+            </div>
           </div>
-        </form>
-        Previously sent stuff:
-        <pre id="content">${allPosts.map(item => item.content).join('\n')}</pre>
-        ${
-          req.user
-            ? `<div class="signout-button">
-          <a href="/signout"><button class="logout">Log Out</button></a>
-        </div>`
-            : ''
-        }
+          <div class="body-container">
+            <div class="body-container-items">
+              <div class="body-container-itemOne">
+                <span>${req.user ? `Welcome back: ${req.user.firstName} ${req.user.lastName}` : ''}</span>
+              </div>
+              <div class="body-container-itemTwo">
+                <form method="post" id="writePost">
+                  <div class="text-container">
+                    <textarea name="content" class="text-area" placeholder="Write something here!"></textarea>
+                  </div>
+                  <div class="text-container-post">
+                    <button class="post">post</button>
+                  </div>
+                </form>
+              </div>
+              <div class="body-container-itemThree-items">
+                <div class="body-container-itemThree-one">
+                  <span class="my-posts">My posts:</span>
+                  <pre id="content">${allPosts.map(item => item.content).join('\n')}</pre>
+                <div class="body-container-itemThree-two">
+                  ${
+                    req.user
+                      ? `<div class="signout-button">
+                    <a href="/signout"><button class="logout">Log out</button></a>
+                  </div>`
+                      : ''
+                  }
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <script src="/scripts/common.js"></script>
         <script src="/scripts/client.js"></script>
       </body>
@@ -224,6 +253,7 @@ async function main() {
         })
       })
       if (req.accepts('html')) {
+        res.redirect('/')
         res.end('Login successful')
       } else {
         res.json({ status: 'success' })
