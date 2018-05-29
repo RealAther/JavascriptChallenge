@@ -184,7 +184,7 @@ async function main() {
                         <span class="bfl">built for learning</span>
                       </div>
                       <div class="body-container-item-one-left-second">
-                        <p class="signup-paragraph"><a href="#" class="JSChallenge-link">JSChallenge</a> is a GitHub Repository where i'm learning javascript. <br /> It's for learning purposes</p>
+                        <p class="signup-paragraph"><a href="https://github.com/RealAther/JavascriptChallenge" class="JSChallenge-link">JSChallenge</a> is a GitHub Repository where i'm learning javascript. <br /> It's for learning purposes</p>
                       </div>
                     </div>
                     <div class="body-container-item-one-right">

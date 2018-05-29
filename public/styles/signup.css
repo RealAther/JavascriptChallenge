@@ -179,7 +179,7 @@ a:hover {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin-top: 40px;
+  margin: 0 auto;
 }
 
 .signup-paragraph {

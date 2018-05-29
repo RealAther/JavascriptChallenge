@@ -48,6 +48,9 @@ textarea {
   width: 500px;
   outline: none;
   resize: none;
+  box-shadow: inset 0px -1px 9px 0px #000;
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
 }
 
 text-area:focus {
@@ -97,9 +100,11 @@ text-area:focus {
   font-size: 20px;
   font-weight: lighter;
   padding: 5px;
+  margin-top: 20px;
 }
 
 .body-container-itemTwo {
+  margin-top: 20px;
 }
 
 .text-container {
@@ -109,19 +114,21 @@ text-area:focus {
 
 .text-area {
   margin-top: 10px;
+  padding: 16px;
 }
 
 .text-container-post {
   display: flex;
   justify-content: flex-end;
+  margin-top: 15px;
 }
 
 .post {
-  font-size: 15px;
-  padding: 0 0;
-  width: 52px;
-  height: 27px;
   text-transform: capitalize;
+}
+
+.body-container-itemThree-items {
+  margin-top: 20px;
 }
 
 .body-container-itemThree-one {
@@ -135,16 +142,19 @@ text-area:focus {
 
 #content {
   background: white;
+  box-shadow: inset -1px 1px 9px 0px #000;
+  padding: 16px;
+
+  background-color: #fafbfc;
+  border: 1px solid #d1d5da;
 }
 
 .body-container-itemThree-two {
   display: flex;
   justify-content: flex-end;
+  margin-top: 15px;
 }
 
 .logout {
-  font-size: 15px;
-  padding: 0 0;
-  width: 60px;
-  height: 27px;
+  background-color: ;
 }
