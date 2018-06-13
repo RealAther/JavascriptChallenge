@@ -18,53 +18,51 @@ async function renderPage(req, res) {
     <!DOCTYPE HTML>
     <html>
       <head>
-        <link rel="stylesheet" href="/styles/main.css" type="text/css">
+        <title>Home-page</title>
+        <link rel="stylesheet" href="/styles/main.css" type="text/css"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.css" type="text/css"/>
+        <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i" rel="stylesheet">
       </head>
       <body>
-        <div class="body-wrapper">
-          <div class="body-header">
-            <div class="body-header-items">
-              <div class="body-header-item-one ">
-                <span class="js-word">JS</span>
-              </div>
-              <div class="body-header-item-two">
-                <span class="challenge-word">Challenge</span>
-              </div>
-            </div>
+        <header>
+          <div class="header-logo">
+            <span class="javascript-logo">javaScript</span>
+            <span class="challenge-logo">challenge</span>
           </div>
+        </header>
+        <div class="body-welcome-message">
+          <span class="welcome-message">${req.user ? `Welcome back: ${req.user.firstName} ${req.user.lastName}` : ''}</span>
+          <div class="body-logout-button">
+            ${
+              req.user
+                ? `<div class="signout-button">
+            <a class="button-link" href="/login"><button class="logout">Log out</button></a>
+            </div>`
+                : ''
+            }
+          </div>
+        </div>
+        <div class="body-wrapper">
           <div class="body-container">
             <div class="body-container-items">
               <div class="body-container-itemOne">
-                <span>${req.user ? `Welcome back: ${req.user.firstName} ${req.user.lastName}` : ''}</span>
-              </div>
-              <div class="body-container-itemTwo">
                 <form method="post" id="writePost">
-                  <div class="text-container">
-                    <textarea name="content" class="text-area" placeholder="Write something here!"></textarea>
-                  </div>
-                  <div class="text-container-post">
-                    <button class="post">post</button>
+                  <div class="text-container-items">
+                    <div class="text-container">
+                      <textarea name="content" class="text-area" placeholder="Write something here!" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Write something here!'"></textarea>
+                    </div>
+                    <div class="text-container-post">
+                      <button class="post">post</button>
+                    </div>
                   </div>
                 </form>
               </div>
-              <div class="body-container-itemThree-items">
-                <div class="body-container-itemThree-one">
-                  <span class="my-posts">My posts:</span>
-                  <pre id="content">${allPosts.map(item => item.content).join('\n')}</pre>
-                <div class="body-container-itemThree-two">
-                  ${
-                    req.user
-                      ? `<div class="signout-button">
-                    <a href="/signout"><button class="logout">Log out</button></a>
-                  </div>`
-                      : ''
-                  }
-                </div>
-                </div>
-              </div>
             </div>
           </div>
+        </div>
+        <div class="body-wrapper-two">
+          <span class="my-posts">My posts:</span>
+          <pre id="content">${allPosts.map(item => item.content).join('\n')}</pre>
         </div>
         <script src="/scripts/common.js"></script>
         <script src="/scripts/client.js"></script>
@@ -133,6 +131,7 @@ async function main() {
       })
 
       if (req.accepts('json')) {
+        res.redirect('/')
         res.json({
           userId: newlyCreatedUser.id,
           status: 'success', // or 'fail',
@@ -159,66 +158,69 @@ async function main() {
         <!DOCTYPE html>
         <html>
           <head>
-            <title>Sign-Up</title>
-            <link rel="stylesheet" href="/styles/signup.css" type="text/css">
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.css" type="text/css">
-            <link href="https://fonts.googleapis.com/css?family=Jura:300" rel="stylesheet">
+            <title>sign-up</title>
+            <link rel="stylesheet" href="/styles/signup.css" type="text/css"/>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.css" type="text/css"/>
+            <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i" rel="stylesheet">
           </head>
           <body>
-            <div class="body-wrapper">
-              <div class="body-header">
-                <div class="body-header-items">
-                  <div class="body-header-item-one ">
-                    <span class="js-word">JS</span>
-                  </div>
-                  <div class="body-header-item-two">
-                    <span class="challenge-word">Challenge</span>
+            <header>
+              <div class="header-logo">
+                <span class="javascript-logo">javaScript</span>
+                <span class="challenge-logo">challenge</span>
+              </div>
+            </header>
+            <div class="form-background-wrapper">
+              <div class="form-background">
+                <div class="form-background-left">
+                  <div class="form-background-left-items">
+                    <img src="/images/sign-up-logo.svg" class="form-logo"/>
+                    <span class="signup-left">SIGN UP</span>
+                    <p class="paragraph">Javascript Challange is a <br/> Github repository where <br/> I'm learning javascript</p>
                   </div>
                 </div>
-              </div>
-              <div class="body-container">
-                <div class="body-container-items">
-                  <div class="body-container-item-one">
-                    <div class="body-container-item-one-left">
-                      <div class="body-container-item-one-left-first">
-                        <span class="bfl">built for learning</span>
-                      </div>
-                      <div class="body-container-item-one-left-second">
-                        <p class="signup-paragraph"><a href="https://github.com/RealAther/JavascriptChallenge" class="JSChallenge-link">JSChallenge</a> is a GitHub Repository where i'm learning javascript. <br /> It's for learning purposes</p>
-                      </div>
-                    </div>
-                    <div class="body-container-item-one-right">
-                      <form method="post" id="emailForm">
-                        <div class="email-main-container">
-                          <div class="input-first-name">
-                            <span class="input-firstName">first name</span>
-                            <input type="text" class="firstNameInput" placeholder="Your first name" name="firstName">
+                <div class="form-background-right">
+                  <div class="form-background-right-items">
+                    <form method="post" id="emailForm">
+                      <div class="form-items">
+                        <div class="form-name-inputs">
+                          <div class="input-first-name-container">
+                            <label class="first-name-label">first name</label>
+                            <input class="first-name-input" name="firstName" placeholder="First Name"></input>
                           </div>
-                          <div class="input-last-name">
-                            <span class="input-lastName">last name</span>
-                            <input type="text" placeholder="Your last name" name="lastName">
-                          </div>
-                          <div class="input-email">
-                            <span class="inputEmail">email</span>
-                            <input type="email" placeholder="you@example.com" name="email">
-                          </div>
-                          <div class="input-password">
-                            <span class="inputPassword">password</span>
-                            <input type="password"  placeholder="Create a password" name="password">
-                          </div>
-                          <div class="signup-button">
-                            <button class="submit">Sign Up</button>
-                            <span class="Log-In">Already have an account? <a href="/login" class="Log-In-Link">Log-In</a></span>
+                          <div class="input-last-name-container">
+                            <label class="last-name-label">last name</label>
+                            <input class="last-name-input" name="lastName" placeholder="Last Name"></input>
                           </div>
                         </div>
-                      </form>
-                    </div>
+                        <div class="form-mail-inputs">
+                          <div class="input-email-container">
+                            <label class="email-label">email</label>
+                            <input class="input-email" type="email" placeholder="Example@gmail.com" name="email">
+                          </div>
+                          <div class="input-password-container">
+                            <label class="password-label">password</label>
+                            <input class="input-password" type="password" placeholder="*****" name="password">
+                          </div>
+                        </div>
+                        <div class="button-container">
+                          <button class="signup-button">sign-up</button>
+                        </div>
+                        <div class="form-right-paragraphs">
+                          <div class="terms-and-conditions">
+                            <p class="terms-paragraph">by clicking signup, you're agreeing to our <a class="terms-link" href="#">terms of service</a> </p>
+                          </div>
+                          <div class="login">
+                            <span class="login-span">already have an account?</span>
+                            <a href="/login" class="login-link">log in</a>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
             </div>
-            <script src="/scripts/common.js" type="application/javascript"></script>
-            <script src="/scripts/signup.js" type="application/javascript"></script>
           </body>
         </html>
         `)
@@ -267,40 +269,49 @@ async function main() {
               <title>Log-In</title>
               <link rel="stylesheet" href="/styles/login.css" type="text/css"/>
               <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.css" type="text/css"/>
-              <link href="https://fonts.googleapis.com/css?family=Jura:300" rel="stylesheet">
+              <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i" rel="stylesheet">
             </head>
             <body>
-              <div class="body-wrapper">
-                <div class="body-header">
-                  <div class="body-header-items">
-                    <div class="body-header-item-one ">
-                      <span class="js-word">JS</span>
-                    </div>
-                    <div class="body-header-item-two">
-                      <span class="challenge-word">Challenge</span>
+              <header>
+                <div class="header-logo">
+                  <span class="javascript-logo">javaScript</span>
+                  <span class="challenge-logo">challenge</span>
+                </div>
+              </header>
+              <div class="form-background-wrapper">
+                <div class="form-background">
+                  <div class="form-background-top">
+                    <div class="form-background-top-items">
+                      <img src="/images/login-logo.svg" class="login-logo"></img>
+                      <span class="login-span">login</span>
+                      <p class="login-top-paragraph1">Hey, good to see you again!</p>
+                      <p class="login-top-paragraph2">Log in to get going</p>
                     </div>
                   </div>
-                </div>
-                <div class="body-container">
-                  <div class="body-container-itemOne">
-                    <form method="post" id="emailForm">
-                      <div class="email-main-container">
-                        <div class="input-email-container">
-                          <div class="inputEmail">
-                            <span class="span-email">Email</span>
-                            <input type="email" placeholder="example@gmail.com" name="email">
+                  <div class="form-background-bottom">
+                    <div class="form-background-bottom-items">
+                      <form id="emailForm" method="post">
+                        <div class="form-items">
+                          <div class="form-mail-inputs">
+                            <div class="input-email-container">
+                              <label class="email-label">email</label>
+                              <input class="input-email" type="email" placeholder="Example@gmail.com" name="email">
+                            </div>
+                            <div class="input-password-container">
+                              <label class="password-label">password</label>
+                              <input class="input-password" type="password" placeholder="*****" name="password">
+                            </div>
                           </div>
-                          <div class="inputPassword">
-                            <span class="span-password">Password</span>
-                            <input type="password" placeholder="*****" name="password">
+                          <div class="button-container">
+                            <button class="login-button">login</button>
+                          </div>
+                          <div class="signup">
+                            <span class="signup-span">Don't have an account yet?</span>
+                            <a href="/signup" class="signup-link">sign up</a>
                           </div>
                         </div>
-                        <div class="signup-button">
-                            <a href="/"><button class="signup">Log In</button></a>
-                            <span class="create-account">Don't have an account yet? <a href="/signup" class="create-account-link">create an account</a></span>
-                        </div>
-                      </div>
-                    </form>
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
