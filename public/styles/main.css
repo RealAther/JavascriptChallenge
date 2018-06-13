@@ -123,9 +123,13 @@ textarea:focus {
 
 /* body-wrapper-two */
 
-.body-wrapper-two {
+.body-wrapper-two-container {
   display: flex;
   justify-content: center;
+}
+.body-wrapper-two {
+  display: flex;
+  flex-direction: column;
   margin-top: 50px;
 }
 .my-posts {

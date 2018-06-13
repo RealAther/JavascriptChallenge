@@ -1,6 +1,7 @@
 // @flow
 
 import express from 'express'
+import escapeHTML from 'escape-html'
 import passport from 'passport'
 import bodyParser from 'body-parser'
 import connectRedis from 'connect-redis'
@@ -60,9 +61,17 @@ async function renderPage(req, res) {
             </div>
           </div>
         </div>
-        <div class="body-wrapper-two">
-          <span class="my-posts">My posts:</span>
-          <pre id="content">${allPosts.map(item => item.content).join('\n')}</pre>
+        <div class="body-wrapper-two-container">
+          ${allPosts
+            .map(
+              item => `
+            <div class="body-wrapper-two">
+              <div class="created_at">Created at ${item.createdAt}</div>
+              <div class="content">${escapeHTML(item.content)}</div>
+            </div>
+          `,
+            )
+            .join('\n')}
         </div>
         <script src="/scripts/common.js"></script>
         <script src="/scripts/client.js"></script>
