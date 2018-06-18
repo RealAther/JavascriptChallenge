@@ -6,7 +6,7 @@ export default function getAPIRouter() {
   const router = new Router()
 
   router.use(function(req, res, next) {
-    if (req.user) {
+    if (!req.user) {
       res.statusCode = 401
       res.json({ status: 0, error: 'Authentication required' })
     } else next()
