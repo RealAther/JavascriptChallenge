@@ -2,6 +2,7 @@
 
 import express from 'express'
 import passport from 'passport'
+import bodyParser from 'body-parser'
 import connectRedis from 'connect-redis'
 import expressSession from 'express-session'
 
@@ -31,6 +32,7 @@ async function main() {
     )
     .use(passport.initialize())
     .use(passport.session())
+    .use(bodyParser.json())
     .use('/auth', getAuthRouter())
     .use('/api', getAPIRouter())
     .listen(3001)
