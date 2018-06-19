@@ -6,8 +6,8 @@ import passport from 'passport'
 import LocalStrategy from 'passport-local'
 
 import { User } from '../../models'
-import { asyncRoute } from '../common'
-import { validateForLogin, validateForRegister } from './validation'
+import { validatedRoute } from '../common'
+import { loginSchema, registerSchema } from './validation'
 
 const SALT_ROUNDS = 10
 
@@ -48,12 +48,7 @@ export default function getAuthRouter() {
 
   router.post(
     '/login',
-    asyncRoute(async function(req, res, next) {
-      const validated = await validateForLogin(req.body)
-      if (!validated.status) {
-        res.statusCode = 400
-        res.json({ status: 0, errors: validated.errors })
-      }
+    validatedRoute(loginSchema, async function(req, res, next) {
       passport.authenticate('local', function(err, user) {
         if (err) {
           console.error('Error while authenticating', err)
@@ -72,14 +67,7 @@ export default function getAuthRouter() {
   )
   router.post(
     '/register',
-    asyncRoute(async function(req, res) {
-      const validated = await validateForRegister(req.body)
-      if (!validated.status) {
-        res.statusCode = 400
-        res.json({ status: 0, errors: validated.errors })
-      }
-      const params = validated.fields
-
+    validatedRoute(registerSchema, async function(req, res, next, params) {
       const existingUser = await User.find({
         where: { email: params.email },
       })
