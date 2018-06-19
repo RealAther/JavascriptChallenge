@@ -81,6 +81,7 @@ export default function getAPIRouter() {
       res.json({ status: 1 })
     }),
   )
+
   router.get('/post/:id/comments', function(req, res) {})
   router.post('/post/:id/comments', function(req, res) {})
   router.put('/post/:id/comment/:cid/likes', function(req, res) {})

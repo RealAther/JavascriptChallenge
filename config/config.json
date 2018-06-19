@@ -1,10 +1,13 @@
 {
-  "development": {
-    "username": "jschal",
-    "password": "jschal",
-    "database": "jschal",
-    "host": "127.0.0.1",
-    "dialect": "postgres",
-    "port": 15432
-  }
+  "database": {
+    "development": {
+      "username": "jschal",
+      "password": "jschal",
+      "database": "jschal",
+      "host": "127.0.0.1",
+      "dialect": "postgres",
+      "port": 15432
+    }
+  },
+  "jwt-secret": "1994A970-BECB-4B71-A7E4-20B2E5CF30BC"
 }

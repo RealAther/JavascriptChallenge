@@ -1,10 +1,10 @@
 import fs from 'fs'
 import path from 'path'
 import Sequelize from 'sequelize'
-import configManifest from '../../config/config.json'
+import settings from '../settings'
 
 const env = process.env.NODE_ENV || 'development'
-const config = configManifest[env]
+const config = settings.database[env]
 const db = {}
 
 const sequelize = new Sequelize(config.database, config.username, config.password, config)

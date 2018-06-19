@@ -1,15 +1,30 @@
 // @flow
 
 import { Router } from 'express'
+import JWT from 'jsonwebtoken'
+import { ExtractJwt, Strategy as JWTStrategy } from 'passport-jwt'
 import bcrypt from 'bcrypt'
 import passport from 'passport'
 import LocalStrategy from 'passport-local'
 
+import settings from '../../settings'
 import { User } from '../../models'
 import { validatedRoute } from '../common'
 import { loginSchema, registerSchema } from './validation'
 
 const SALT_ROUNDS = 10
+
+function generateJWTForUser(user: $FlowFixMe): string {
+  return JWT.sign(
+    {
+      id: user.id,
+    },
+    settings['jwt-secret'],
+    {
+      expiresIn: '30d',
+    },
+  )
+}
 
 export default function getAuthRouter() {
   passport.serializeUser(function(user, done) {
@@ -43,13 +58,25 @@ export default function getAuthRouter() {
       },
     ),
   )
+  passport.use(
+    new JWTStrategy(
+      {
+        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+        secretOrKey: settings['jwt-secret'],
+      },
+      function(jwtPayload, cb) {
+        console.log('in jwt strategy callback')
+        User.findById(jwtPayload.id).then(user => cb(null, user), cb)
+      },
+    ),
+  )
 
   const router = new Router()
 
   router.post(
     '/login',
     validatedRoute(loginSchema, async function(req, res, next) {
-      passport.authenticate('local', function(err, user) {
+      passport.authenticate('local', { session: false }, function(err, user) {
         if (err) {
           console.error('Error while authenticating', err)
           res.statusCode = 500
@@ -61,7 +88,7 @@ export default function getAuthRouter() {
           res.json({ status: 0, error: 'Invalid username or password' })
           return
         }
-        res.json({ status: 1 })
+        res.json({ status: 1, token: generateJWTForUser(user) })
       })(req, res, next)
     }),
   )
@@ -92,20 +119,16 @@ export default function getAuthRouter() {
       })
 
       await new Promise(function(resolve, reject) {
-        req.login(newUser, function(err) {
+        req.login(newUser, { session: false }, function(err) {
           if (err) {
             reject(err)
           } else resolve()
         })
       })
 
-      res.json({ status: 1 })
+      res.json({ status: 1, token: generateJWTForUser(newUser) })
     }),
   )
-  router.post('/logout', function(req, res) {
-    req.logout()
-    res.json({ status: 1 })
-  })
   router.get('/me', function(req, res) {
     res.json({ status: 1, loggedIn: !!req.user })
   })
