@@ -16,6 +16,7 @@ export default function getAPIRouter() {
     } else next()
   })
 
+  // TODO: Abstract out post ownership queries
   router.get(
     '/posts',
     asyncRoute(async function(req, res) {
@@ -61,6 +62,23 @@ export default function getAPIRouter() {
       })
 
       res.json({ status: 1, post })
+    }),
+  )
+  router.delete(
+    '/post/:id',
+    asyncRoute(async function(req, res) {
+      await Post.destroy({
+        where: {
+          id: req.params.id,
+          [Sequelize.Op.or]: [
+            // TODO: Allow posts of other IDs when friendships are done
+            { author_id: req.user.id },
+            { user_id: req.user.id },
+          ],
+        },
+      })
+
+      res.json({ status: 1 })
     }),
   )
   router.get('/post/:id/comments', function(req, res) {})
