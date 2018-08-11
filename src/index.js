@@ -1,9 +1,11 @@
 // @flow
 
+import cors from 'cors'
 import express from 'express'
 import passport from 'passport'
 import bodyParser from 'body-parser'
 
+import settings from './settings'
 import getAPIRouter from './routes/api'
 import getAuthRouter from './routes/auth'
 import { sequelize } from './models'
@@ -14,12 +16,21 @@ async function main() {
   await sequelize.authenticate()
   // await sequelize.sync({ force: true })
 
-  express()
+  let app = express()
+
+  if (settings.NODE_ENV === 'development') {
+    app = app.use(cors())
+  }
+
+  app = app
     .use(passport.initialize())
     .use(bodyParser.json())
     .use('/auth', getAuthRouter())
     .use('/api', passport.authenticate('jwt', { session: false }), getAPIRouter())
-    .listen(3001)
+
+  const server = app.listen(3001)
+  const serverPort = server.address().port
+  console.log(`Starting API server on http://localhost:${serverPort}/`)
 }
 
 main().catch(error => {

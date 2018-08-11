@@ -9,5 +9,6 @@
       "port": 15432
     }
   },
-  "jwt-secret": "1994A970-BECB-4B71-A7E4-20B2E5CF30BC"
+  "jwt-secret": "1994A970-BECB-4B71-A7E4-20B2E5CF30BC",
+  "NODE_ENV": "development"
 }
