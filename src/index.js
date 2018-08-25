@@ -19,7 +19,12 @@ async function main() {
   let app = express()
 
   if (settings.NODE_ENV === 'development') {
-    app = app.use(cors())
+    app = app.use(
+      cors({
+        origin: ['http://localhost:3000'],
+        credentials: true,
+      }),
+    )
   }
 
   app = app
