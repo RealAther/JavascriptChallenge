@@ -64,6 +64,29 @@ export default function getAPIRouter() {
       res.json({ status: 1, post })
     }),
   )
+  router.post(
+    '/post/:id',
+    asyncRoute(async function(req, res) {
+      const post = await Post.findOne({
+        where: {
+          id: req.params.id,
+          [Sequelize.Op.or]: [
+            // TODO: Allow posts of other IDs when friendships are done
+            { author_id: req.user.id },
+            { user_id: req.user.id },
+          ],
+        },
+      })
+
+      if (!post) {
+        res.json({ status: 0, errors: [{ field: '_', message: 'Requested post was not found' }] })
+        return
+      }
+      await post.update({ content: req.body.content })
+
+      res.json({ status: 1, post })
+    }),
+  )
   router.delete(
     '/post/:id',
     asyncRoute(async function(req, res) {
