@@ -20,15 +20,29 @@ export default function getAPIRouter() {
   router.get(
     '/posts',
     asyncRoute(async function(req, res) {
+      let userId = null
+      if (req.query && req.query.user) {
+        userId = parseInt(req.query.user, 10)
+        if (Number.isNaN(userId)) {
+          throw new Error('Invalid user ID specified')
+        }
+        // TODO: Check if the user id is a friend
+      }
       // TODO: Allow ability get posts of a different user
       // TODO: Add pagination
       const posts = await Post.findAll({
         where: {
-          [Sequelize.Op.or]: [
-            // TODO: Allow posts of other IDs when friendships are done
-            { author_id: req.user.id },
-            { user_id: req.user.id },
-          ],
+          ...(userId === null
+            ? {
+                [Sequelize.Op.or]: [
+                  // TODO: Allow posts of other IDs when friendships are done
+                  { author_id: userId },
+                  { user_id: userId },
+                ],
+              }
+            : {
+                user_id: userId,
+              }),
         },
       })
 
@@ -40,7 +54,7 @@ export default function getAPIRouter() {
     validatedRoute(createPostSchema, async function(req, res, _, body) {
       const newPost = await Post.create({
         author_id: req.user.id,
-        user_id: null, // TODO: Fix this when we make friends :(
+        user_id: req.user.id, // TODO: Fix this when we make friends :(
         content: body.content,
       })
 
@@ -79,8 +93,7 @@ export default function getAPIRouter() {
       })
 
       if (!post) {
-        res.json({ status: 0, errors: [{ field: '_', message: 'Requested post was not found' }] })
-        return
+        throw new Error('Requested post was not found')
       }
       await post.update({ content: req.body.content })
 
