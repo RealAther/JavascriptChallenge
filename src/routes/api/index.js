@@ -36,8 +36,8 @@ export default function getAPIRouter() {
             ? {
                 [Sequelize.Op.or]: [
                   // TODO: Allow posts of other IDs when friendships are done
-                  { author_id: userId },
-                  { user_id: userId },
+                  { author_id: req.user.id },
+                  { user_id: req.user.id },
                 ],
               }
             : {
