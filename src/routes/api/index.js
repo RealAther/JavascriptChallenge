@@ -16,6 +16,14 @@ export default function getAPIRouter() {
     } else next()
   })
 
+  router.get('/me', function(req, res) {
+    res.json({
+      id: req.user.id,
+      firstName: req.user.firstName,
+      lastName: req.user.lastName,
+    })
+  })
+
   // TODO: Abstract out post ownership queries
   router.get(
     '/posts',
